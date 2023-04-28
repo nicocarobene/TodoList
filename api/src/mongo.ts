@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-mongoose.connect('mongodb+srv://Nicolas:nicolas1997@cluster0.si2frwa.mongodb.net/TodoTsUser?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_DB)
 .then(() => {
   console.log('Database connected')
 }).catch(err => {
