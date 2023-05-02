@@ -1,34 +1,52 @@
 import { useNavigate } from "react-router-dom";
 import { getRegister } from "./services/getRegister";
 import { useAppDispatch, useAppSelector } from "./store/Usertype";
-import { loginUser, logout } from "./store/user";
-import { UserLogin, UserRegister } from "./types";
+import { addTodo, deleteTodoById, loginUser, logout, ToggleCompleted, RemoveAllCompleted } from "./store/user";
+import { TodoWithoutId, UserLogin, UserRegister } from "./types";
 import { getLogin } from "./services/getLogin";
+import { addTodoService } from "./services/addTodo";
 
-export const useUser=()=>{
+
+
+export const useUser = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(store => store.user)
+    const todos = useAppSelector(store => store.user.todos)
 
-    const dispatch= useAppDispatch();
-
-    const Register= (user:UserRegister)=>{
-        getRegister(user).then(resp=>{
+    const Register = (user: UserRegister) => {
+        getRegister(user).then(resp => {
             navigate('/login')
+            console.log(resp)
         })
     }
-
-    const Login=(user:UserLogin)=>{
-        getLogin(user).then(resp=>{
+    const addTodoUser = (todo: TodoWithoutId) => {
+        if (user.token === null) return
+        addTodoService(todo, user.token).then(resp => {
+            dispatch(addTodo(resp))
+        })
+    }
+    const Login = (user: UserLogin) => {
+        getLogin(user).then(resp => {
             dispatch(loginUser(resp))
-            console.log(resp)
-            window.localStorage.setItem('__redux__user',JSON.stringify(resp))
             navigate('/')
         })
+    }
 
+    const cleanCompleted = () => {
+        dispatch(RemoveAllCompleted())
     }
-    const logut=()=>{
+    const logut = () => {
         dispatch(logout())
-        window.localStorage.removeItem('__redux__user')
     }
-    const user= useAppSelector(store=> store.user)
-    return {Register, Login, logut, user}
+
+    const deleteById = (id: string) => {
+        dispatch(deleteTodoById(id))
+    }
+
+    const togleCompleted = (id: string) => {
+        dispatch(ToggleCompleted(id))
+    }
+
+    return { Register, Login, logut, user, todos, deleteById, addTodoUser, togleCompleted, cleanCompleted }
 }

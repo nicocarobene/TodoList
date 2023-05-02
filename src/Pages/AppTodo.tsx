@@ -1,52 +1,26 @@
 import { useState } from "react";
-import Todos from "../Component/Todos";
-import { FilterValue, Todo, TodoId, TodoTitle } from "../types";
+import { FilterValue, TodoId, TodoTitle, TodoWithoutId } from '../types'
 import { TODO_FILTER } from "../const";
 import Footer from "../Component/Footer";
 import { Header } from "../Component/Header";
+import { useUser } from "../useUser";
+import Todos from "../Component/Todos";
 
-const mockTodo = [
-    {
-        id: "1",
-        title: "Ver el twitch de midu",
-        completed: true,
-    },
-    {
-        id: "2",
-        title: "Aprender React with TS",
-        completed: false,
-    },
-    {
-        id: "3",
-        title: "Ver la MiduFest",
-        completed: false,
-    },
-];
+
 export default function AppTodo() {
-    const [todos, setTodos] = useState(mockTodo);
+    const { todos = [], addTodoUser, deleteById, togleCompleted, cleanCompleted } = useUser()
     const [filterSelected, setFilterSelected] = useState<FilterValue>(
         TODO_FILTER.ALL
     );
 
+    if (todos === null) return <p>Please loggin for continuo</p>
+
     const handleRemuve = ({ id }: TodoId): void => {
-        const newTodos = todos.filter((todo) => todo.id !== id);
-        setTodos(newTodos);
+        deleteById(id)
     };
 
-    const handleCompleted = ({
-        id,
-        completed,
-    }: Pick<Todo, "id" | "completed">): void => {
-        const newTodo = todos.map((todo) => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    completed
-                };
-            }
-            return todo;
-        });
-        setTodos(newTodo);
+    const handleCompleted = ({ id }: TodoId): void => {
+        togleCompleted(id)
     };
 
     const handleFilterChange = (filter: FilterValue): void => {
@@ -64,23 +38,19 @@ export default function AppTodo() {
     });
 
     const handleRemoveAllCompleted = (): void => {
-        const newTodos = todos.filter((todo) => !todo.completed);
-        setTodos(newTodos);
+        cleanCompleted()
     };
 
     const handleAddTodo = ({ title }: TodoTitle): void => {
-        const newTodo = {
+        const newTodo: TodoWithoutId = {
             title,
-            id: crypto.randomUUID(), //api del navegador para crear ID
-            completed: false,
+            completed: false
         };
-
-        const newTodos = [...todos, newTodo];
-        setTodos(newTodos);
+        addTodoUser(newTodo)
     };
 
     return (
-        <>
+        <div className="todoapp">
             <Header onAddTodo={handleAddTodo} />
             <Todos
                 onRemoveTodo={handleRemuve}
@@ -94,6 +64,6 @@ export default function AppTodo() {
                 handleFilterChange={handleFilterChange}
                 onClearCompleted={handleRemoveAllCompleted}
             />
-        </>
+        </div>
     )
 }

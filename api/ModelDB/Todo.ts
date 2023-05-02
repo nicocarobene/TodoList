@@ -1,5 +1,5 @@
-import {  Schema } from 'mongoose'
-import {prop, getModelForClass} from '@typegoose/typegoose'
+import { prop, getModelForClass, Ref } from '@typegoose/typegoose'
+import { UserSchema } from './User';
 
 const mockTodo = [
     {
@@ -19,11 +19,13 @@ const mockTodo = [
     },
 ];
 
-class TodoSchema{
+export class TodoSchema {
     @prop()
     title: string;
+
     @prop()
     completed: boolean;
-    @prop({required:true, ref:'UserModel'})
-    users: Schema.Types.ObjectId
 }
+
+const Todo = getModelForClass(TodoSchema)
+export default Todo

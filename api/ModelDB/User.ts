@@ -1,26 +1,27 @@
-import {  Schema } from 'mongoose'
-import {prop, getModelForClass} from '@typegoose/typegoose'
+import { prop, getModelForClass, Ref } from '@typegoose/typegoose'
+import { TodoSchema } from './Todo';
 
 
-class UserSchema {
-    @prop({required:true, unique:true})
+
+export class UserSchema {
+    @prop({ required: true, unique: true })
     username: string;
-  
-    @prop({required:true, unique:true})
-    name:string;
 
-    @prop({required:true, unique:true})
+    @prop({ required: true })
+    name: string;
+
+    @prop({ required: true, unique: true })
     email: string;
 
-    @prop({ type:()=>[Schema.Types.ObjectId], ref:'Todo'})
-    todo: Schema.Types.ObjectId[]
-    
-    @prop({required:true, unique:true})
+    @prop({ ref: () => TodoSchema })
+    todos: Ref<TodoSchema>[];
+
+    @prop({ required: true, unique: true })
     passwordHash: string;
 }
 
 
-const UserModel= getModelForClass(UserSchema)
+const UserModel = getModelForClass(UserSchema)
 export default UserModel
 
 

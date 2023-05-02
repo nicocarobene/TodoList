@@ -1,4 +1,4 @@
-.form{
+.form {
     display: flex;
     flex-direction: column;
     place-items: center;
@@ -6,28 +6,31 @@
     gap: 25px;
     border-radius: 8px;
 }
-.form__login .inputerror{
+
+.form__login .inputerror {
     border-color: #b83f45;
 }
 
-.form__login{
+.form__login {
     width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
 }
-.form__loginError{
+
+.form__loginError {
     position: absolute;
     color: #b83f45;
     bottom: -20px;
 }
-.form__login input{
+
+.form__login input {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #000;
 }
 
-.form__submit{
+.form__submit {
     padding: 10px;
     width: 50%;
     border-radius: 8px;
@@ -35,19 +38,22 @@
     font-weight: bold;
     cursor: pointer;
 }
-.active{
+
+.active {
     font-weight: bold;
     text-decoration: none;
     outline: none;
     border: none;
 }
-.log{
+
+.log {
     text-decoration: none;
     outline: none;
     border: none;
     cursor: pointer;
 }
-.log:focus{
-    box-shadow:none;
+
+.log:focus {
+    box-shadow: none;
     outline: none;
 }

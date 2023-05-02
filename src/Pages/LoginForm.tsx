@@ -1,9 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useUser } from "../useUser";
-import { ErrorLogin as Error} from "../types";
+import { ErrorLogin as Error } from "../types";
 
 export default function LoginForm() {
-    const{Login}=useUser()
+    const { Login } = useUser()
     return (
         <Formik
             initialValues={{ username: '', password: '' }}
