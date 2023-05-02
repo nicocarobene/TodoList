@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { Todo, User } from '../types';
+import { type todo, type User } from '../types'
 
 export const DEFAULT_VALUE: User = {
   username: null,
@@ -10,10 +10,9 @@ export const DEFAULT_VALUE: User = {
 }
 
 const initialState: User = (() => {
-  const persistedState = localStorage.getItem("__redux__user");
-  console.log()
-  return persistedState ? JSON.parse(persistedState) : DEFAULT_VALUE;
-})();
+  const persistedState = localStorage.getItem('__redux__user')
+  return persistedState ? JSON.parse(persistedState) : DEFAULT_VALUE
+})()
 
 export const counterSlice = createSlice({
   name: 'user',
@@ -28,10 +27,10 @@ export const counterSlice = createSlice({
       return action.payload
     },
 
-    addTodo: (state: User, action: PayloadAction<Todo>) => {
+    addTodo: (state: User, action: PayloadAction<todo>) => {
       if (state.username === null) return state
       const newtodo = action.payload
-      const newTodos = [...state.todos as Todo[], newtodo]
+      const newTodos = [...state.todos as todo[], newtodo]
       return { ...state, todos: newTodos }
     },
 
@@ -55,7 +54,7 @@ export const counterSlice = createSlice({
       const newtodos = state.todos?.filter(todo => !todo.completed)
       return { ...state, todos: newtodos }
     },
-    roollbackTodo: (state, action: PayloadAction<Todo>) => {
+    roollbackTodo: (state, action: PayloadAction<todo>) => {
       if (state.todos === null) return state
       const isTodoAlreadyExists = state.todos?.some(todo => todo.id === action.payload.id)
       if (!isTodoAlreadyExists) {
@@ -63,7 +62,7 @@ export const counterSlice = createSlice({
         return { ...state, todos: newtodos }
       }
     },
-    roollbackCompleted: (state, action: PayloadAction<Todo>) => {
+    roollbackCompleted: (state, action: PayloadAction<todo>) => {
       if (state.todos === null) return state
       const newTodos = state.todos?.map(todo => {
         if (todo.id === action.payload.id) return action.payload

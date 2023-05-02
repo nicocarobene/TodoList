@@ -1,12 +1,11 @@
-import { Middleware, configureStore } from '@reduxjs/toolkit'
+import { type Middleware, configureStore } from '@reduxjs/toolkit'
 import user, { roollbackCompleted, roollbackTodo } from './user'
-import { deleteTodo } from '../services/deleteTodo';
-import { toggleImportante } from '../services/toggleImportante';
-
+import { deleteTodo } from '../services/deleteTodo'
+import { toggleImportante } from '../services/toggleImportante'
 
 const persistanceMiddleware: Middleware = (store) => (next) => (action) => {
   next(action)
-  localStorage.setItem("__redux__user", JSON.stringify(store.getState()));
+  localStorage.setItem('__redux__user', JSON.stringify(store.getState()))
 }
 
 const syncWithDatabaseMiddleware: Middleware = (store) => (next) => (action) => {

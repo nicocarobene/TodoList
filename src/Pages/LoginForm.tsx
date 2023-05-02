@@ -1,33 +1,33 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useUser } from "../useUser";
-import { ErrorLogin as Error } from "../types";
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useUser } from '../useUser'
+import { type ErrorLogin as Error } from '../types'
 
-export default function LoginForm() {
-    const { Login } = useUser()
-    return (
+export default function LoginForm () {
+  const { Login } = useUser()
+  return (
         <Formik
             initialValues={{ username: '', password: '' }}
             validate={values => {
-                const errors: Error = {};
-                if (!values.username) {
-                    errors.username = 'Required';
-                } else if (
-                    /^[a-zA-Z0-9]$/.test(values.username)
-                ) {
-                    errors.username = 'Invalid username';
-                }
-                if (!values.password) {
-                    errors.password = 'Required';
-                } else if (
-                    /^[A-Z0-9._%+-]$/i.test(values.password)
-                ) {
-                    errors.password = 'Invalid password';
-                }
-                return errors;
+              const errors: Error = {}
+              if (!values.username) {
+                errors.username = 'Required'
+              } else if (
+                /^[a-zA-Z0-9]$/.test(values.username)
+              ) {
+                errors.username = 'Invalid username'
+              }
+              if (!values.password) {
+                errors.password = 'Required'
+              } else if (
+                /^[A-Z0-9._%+-]$/i.test(values.password)
+              ) {
+                errors.password = 'Invalid password'
+              }
+              return errors
             }}
             onSubmit={(values, { setSubmitting }) => {
-                setSubmitting(false)
-                Login(values)
+              setSubmitting(false)
+              Login(values)
             }}
         >
             {({ errors, isSubmitting }) => (
@@ -46,5 +46,5 @@ export default function LoginForm() {
                 </Form>
             )}
         </Formik>
-    )
+  )
 }

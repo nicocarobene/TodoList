@@ -1,55 +1,54 @@
-import { useState } from "react";
-import { FilterValue, TodoId, TodoTitle, TodoWithoutId } from '../types'
-import { TODO_FILTER } from "../const";
-import Footer from "../Component/Footer";
-import { Header } from "../Component/Header";
-import { useUser } from "../useUser";
-import Todos from "../Component/Todos";
+import { useState } from 'react'
+import { type FilterValue, type TodoId, type TodoTitle, type TodoWithoutId } from '../types'
+import { TODO_FILTER } from '../const'
+import Footer from '../Component/Footer'
+import { Header } from '../Component/Header'
+import { useUser } from '../useUser'
+import Todos from '../Component/Todos'
 
+export default function AppTodo () {
+  const { todos = [], addTodoUser, deleteById, togleCompleted, cleanCompleted } = useUser()
+  const [filterSelected, setFilterSelected] = useState<FilterValue>(
+    TODO_FILTER.ALL
+  )
 
-export default function AppTodo() {
-    const { todos = [], addTodoUser, deleteById, togleCompleted, cleanCompleted } = useUser()
-    const [filterSelected, setFilterSelected] = useState<FilterValue>(
-        TODO_FILTER.ALL
-    );
+  if (todos === null) return <p>Please loggin for continuo</p>
 
-    if (todos === null) return <p>Please loggin for continuo</p>
+  const handleRemuve = ({ id }: TodoId): void => {
+    deleteById(id)
+  }
 
-    const handleRemuve = ({ id }: TodoId): void => {
-        deleteById(id)
-    };
+  const handleCompleted = ({ id }: TodoId): void => {
+    togleCompleted(id)
+  }
 
-    const handleCompleted = ({ id }: TodoId): void => {
-        togleCompleted(id)
-    };
+  const handleFilterChange = (filter: FilterValue): void => {
+    setFilterSelected(filter)
+  }
 
-    const handleFilterChange = (filter: FilterValue): void => {
-        setFilterSelected(filter);
-    };
+  const activeCount = todos.filter((todo) => !todo.completed).length
 
-    const activeCount = todos.filter((todo) => !todo.completed).length;
+  const completedCount = todos.length - activeCount
 
-    const completedCount = todos.length - activeCount;
+  const filteredTodos = todos.filter((todo) => {
+    if (filterSelected === TODO_FILTER.ACTIVE) return !todo.completed
+    if (filterSelected === TODO_FILTER.COMPLETED) return todo.completed
+    return todo
+  })
 
-    const filteredTodos = todos.filter((todo) => {
-        if (filterSelected === TODO_FILTER.ACTIVE) return !todo.completed;
-        if (filterSelected === TODO_FILTER.COMPLETED) return todo.completed;
-        return todo;
-    });
+  const handleRemoveAllCompleted = (): void => {
+    cleanCompleted()
+  }
 
-    const handleRemoveAllCompleted = (): void => {
-        cleanCompleted()
-    };
+  const handleAddTodo = ({ title }: TodoTitle): void => {
+    const newTodo: TodoWithoutId = {
+      title,
+      completed: false
+    }
+    addTodoUser(newTodo)
+  }
 
-    const handleAddTodo = ({ title }: TodoTitle): void => {
-        const newTodo: TodoWithoutId = {
-            title,
-            completed: false
-        };
-        addTodoUser(newTodo)
-    };
-
-    return (
+  return (
         <div className="todoapp">
             <Header onAddTodo={handleAddTodo} />
             <Todos
@@ -65,5 +64,5 @@ export default function AppTodo() {
                 onClearCompleted={handleRemoveAllCompleted}
             />
         </div>
-    )
+  )
 }

@@ -16,7 +16,6 @@ export interface ErrorRegister {
 
 export type ErrorLogin = Omit<ErrorLogin, 'email' | 'name'>
 
-
 export interface User {
   todos: Todo[] | null,
   username: string | null,
@@ -24,12 +23,12 @@ export interface User {
   token: string | null
 }
 
-export type LoginUser = {
+export interface LoginUser {
   username: string,
   password: string
 }
 
-export interface Todo {
+export interface todo {
   id: string
   title: string
   completed: boolean

@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router-dom";
-import AppTodo from "./Pages/AppTodo";
-import LoginForm from "./Pages/LoginForm";
-import RegisterForm from "./Pages/RegisterForm";
-import Error404 from "./Pages/Error404";
+import { Route, Routes } from 'react-router-dom'
+import AppTodo from './Pages/AppTodo'
+import LoginForm from './Pages/LoginForm'
+import RegisterForm from './Pages/RegisterForm'
+import Error404 from './Pages/Error404'
 
 const App: React.FC = () => {
   return (
@@ -17,4 +17,4 @@ const App: React.FC = () => {
   )
 }
 
-export default App;
+export default App

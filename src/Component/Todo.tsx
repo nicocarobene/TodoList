@@ -1,7 +1,7 @@
-import { TodoId, type Todo } from "../types";
+import { type TodoId, type todo } from '../types'
 
-interface Props extends Todo {
-  onToggleCompleteTodo: ({ id, completed }: Pick<Todo, 'id' | 'completed'>) => void
+interface Props extends todo {
+  onToggleCompleteTodo: ({ id, completed }: Pick<todo, 'id' | 'completed'>) => void
   onRemoveTodo: ({ id }: TodoId) => void
 }
 const Todo: React.FC<Props> = ({ onToggleCompleteTodo, onRemoveTodo, id, title, completed }) => {
