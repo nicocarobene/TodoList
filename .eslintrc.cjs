@@ -12,11 +12,17 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    proyect: './tsconfig.json'
+    project: ['./todoTS/tsconfig.json', './todoTS/api/tsconfig.json']
   },
   plugins: [
     'react'
   ],
   rules: {
+    'react/prop-types': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/member-delimiter-style': 'off'
   }
 }
