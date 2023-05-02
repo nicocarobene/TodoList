@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
+import { MONGO_DB } from '../Mongo_DB'
 
-mongoose.connect(process.env.MONGO_DB)
+mongoose.connect(MONGO_DB)
   .then(() => {
     console.log('Database connected')
   }).catch(err => {
@@ -9,5 +10,5 @@ mongoose.connect(process.env.MONGO_DB)
 
 process.on('uncaughtException', error => {
   console.error(error)
-  mongoose.disconnect()
+  void mongoose.disconnect()
 })

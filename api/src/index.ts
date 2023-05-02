@@ -8,9 +8,9 @@ import jwt from 'jsonwebtoken'
 import { UseStractor } from '../Middleware/UseStractor'
 import Todo from '../ModelDB/Todo'
 import mongoose from 'mongoose'
+import { SECRET_WORD } from '../Mongo_DB'
 require('./mongo')
 
-export const SECRET_WORD = 'palabrasecretea'
 const app = express()
 
 app.use(express.json())

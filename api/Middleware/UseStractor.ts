@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { SECRET_WORD } from '../src'
+import { SECRET_WORD } from '../Mongo_DB'
 interface Jwt {
   username: string,
   id: string,
