@@ -1,18 +1,20 @@
-import { Routes, Route } from 'react-router-dom'
+import { Route, Routes } from "react-router-dom";
+import AppTodo from "./Pages/AppTodo";
+import LoginForm from "./Pages/LoginForm";
 import RegisterForm from "./Pages/RegisterForm";
-import AppTodo from './Pages/AppTodo'
-import LoginForm from './Pages/LoginForm';
+import Error404 from "./Pages/Error404";
 
 const App: React.FC = () => {
   return (
-    <div className="todoapp">
+    <div>
       <Routes>
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path='/' element={<AppTodo/>}/>
-        <Route path='/login' element={<LoginForm/>}/>
+        <Route path="/" element={<AppTodo />}></Route>
+        <Route path="/login" element={<LoginForm />}></Route>
+        <Route path="/register" element={<RegisterForm />}></Route>
+        <Route path="/*" element={<Error404 />} />
       </Routes>
     </div>
-  );
+  )
 }
 
 export default App;
