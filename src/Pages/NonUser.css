@@ -1,0 +1,14 @@
+.nonUser{
+    text-align: center;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.nonUser h1{
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+}
+.nonUser p{
+    font-size: 1rem;
+}

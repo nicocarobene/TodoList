@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { type todo, type User } from '../types'
 
-export const DEFAULT_VALUE: User = {
+export const DEFAULT_STATE: User = {
   username: null,
   name: null,
   token: null,
@@ -10,8 +10,8 @@ export const DEFAULT_VALUE: User = {
 }
 
 const initialState: User = (() => {
-  const persistedState = localStorage.getItem('__redux__user')
-  return persistedState ? JSON.parse(persistedState) : DEFAULT_VALUE
+  const persistedState = window.localStorage.getItem('__redux__user')
+  return persistedState ? JSON.parse(persistedState).user : DEFAULT_STATE
 })()
 
 export const counterSlice = createSlice({
@@ -19,7 +19,7 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     logout: (state: User) => {
-      state = { ...DEFAULT_VALUE }
+      state = { ...DEFAULT_STATE }
       return state
     },
 

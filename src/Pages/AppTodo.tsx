@@ -5,6 +5,7 @@ import Footer from '../Component/Footer'
 import { Header } from '../Component/Header'
 import { useUser } from '../useUser'
 import Todos from '../Component/Todos'
+import { NonUser } from './NonUser'
 
 export default function AppTodo () {
   const { todos = [], addTodoUser, deleteById, togleCompleted, cleanCompleted } = useUser()
@@ -12,7 +13,7 @@ export default function AppTodo () {
     TODO_FILTER.ALL
   )
 
-  if (todos === null) return <p>Please loggin for continuo</p>
+  if (todos === null) return <NonUser/>
 
   const handleRemuve = ({ id }: TodoId): void => {
     deleteById(id)
