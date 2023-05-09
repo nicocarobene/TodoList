@@ -40,7 +40,7 @@ const syncWithDatabaseMiddleware: Middleware = (store) => (next) => (action) => 
     const todoCompleted = previusState.user.todos?.filter(todo => todo.completed === true)
     deleteCompleted({ token })
       .catch(e => {
-        console.log({ todoCompleted, previusState })
+        console.log({ e })
         if (todoCompleted) store.dispatch(roollbackAllCompleted(todoCompleted))
       })
   }
