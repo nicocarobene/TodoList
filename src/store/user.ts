@@ -68,11 +68,15 @@ export const counterSlice = createSlice({
         if (todo.id === action.payload.id) return action.payload
         return todo
       })
-      console.log(newTodos)
+      return { ...state, todos: newTodos }
+    },
+    roollbackAllCompleted: (state, action: PayloadAction<todo[]>) => {
+      if (state.todos === null) return state
+      const newTodos = [...state.todos, ...action.payload]
       return { ...state, todos: newTodos }
     }
   }
 })
 
-export const { loginUser, logout, deleteTodoById, roollbackTodo, roollbackCompleted, RemoveAllCompleted, ToggleCompleted, addTodo } = counterSlice.actions
+export const { loginUser, logout, deleteTodoById, roollbackTodo, roollbackCompleted, RemoveAllCompleted, ToggleCompleted, addTodo, roollbackAllCompleted } = counterSlice.actions
 export default counterSlice.reducer

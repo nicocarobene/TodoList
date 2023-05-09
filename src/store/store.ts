@@ -1,7 +1,8 @@
 import { type Middleware, configureStore } from '@reduxjs/toolkit'
-import user, { roollbackCompleted, roollbackTodo } from './user'
+import user, { roollbackAllCompleted, roollbackCompleted, roollbackTodo } from './user'
 import { deleteTodo } from '../services/deleteTodo'
 import { toggleImportante } from '../services/toggleImportante'
+import { deleteCompleted } from '../services/deleteCompleted'
 
 const persistanceMiddleware: Middleware = (store) => (next) => (action) => {
   next(action)
@@ -32,6 +33,16 @@ const syncWithDatabaseMiddleware: Middleware = (store) => (next) => (action) => 
       console.log(e)
       if (togleTodo) store.dispatch(roollbackCompleted(togleTodo))
     })
+  }
+  if (type === 'user/RemoveAllCompleted') {
+    if (previusState.user.token === null) return
+    const { token } = previusState.user
+    const todoCompleted = previusState.user.todos?.filter(todo => todo.completed === true)
+    deleteCompleted({ token })
+      .catch(e => {
+        console.log({ todoCompleted, previusState })
+        if (todoCompleted) store.dispatch(roollbackAllCompleted(todoCompleted))
+      })
   }
 }
 
